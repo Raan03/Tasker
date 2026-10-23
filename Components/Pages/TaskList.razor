@@ -7,7 +7,7 @@
             <img src="/img/task.jpg" width="300" />
         </div>
         <div>
-            <EditForm Model="ti" OnValidSubmit="AddItem">
+            <EditForm Model="ti" OnValidSubmit="addItem">
                 <DataAnnotationsValidator/>
 
                 <div class="d-flex flex-row gap-2">
@@ -24,7 +24,7 @@
             
                 @foreach (var item in list)
                 {
-                    <TaskItemComponent Item="item" OnDeleteCallback="DeleteItem"></TaskItemComponent>
+                    <TaskItemComponent Item="item" OnDeleteCallback="deleteItem"></TaskItemComponent>
                 }            
         </div>
     </div>
@@ -35,14 +35,14 @@
     private TaskItem ti = new TaskItem();
     private List<TaskItem> list = new List<TaskItem>();
 
-    private void AddItem()
+    private void addItem()
     {
         list.Add(ti);
         ti = new TaskItem();
     }
 
-    private void DeleteItem(TaskItem item)
+    private async Task deleteItem(TaskItem item)
     {
-        list.Remove(item);
+        await Task.Run(() => list.Remove(item));
     }
 }
