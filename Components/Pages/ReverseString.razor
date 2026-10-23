@@ -13,14 +13,14 @@
 
 @if (showResult)
 {
-    <Message DisplayMessage="@displayMessage" Title="Result" CssClass="alert-danger" />
+    <MessageComponent DisplayMessage="@displayMessage" Title="Result" CssClass="alert-danger" />
     @if (isPalindrome)
     {
-        <Message DisplayMessage="The message is a palindrome!" CssClass="alert-success"></Message>
+        <MessageComponent DisplayMessage="The message is a palindrome!" CssClass="alert-success"></MessageComponent>
     }
     else
     {
-        <Message DisplayMessage="The message is not palindrome!" CssClass="alert-primary"></Message>
+        <MessageComponent DisplayMessage="The message is not palindrome!" CssClass="alert-primary"></MessageComponent>
     }
 }
 

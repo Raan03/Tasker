@@ -1,0 +1,9 @@
+/* CSS for TaskList component */
+.task {
+    font-size: 1.5rem;
+    border: 5px solid var(--bs-subtle-danger);
+    background: -webkit-linear-gradient(to right, #CFDEF3, #E0EAFC);
+    background: linear-gradient(to right, #CFDEF3, #E0EAFC);
+    border-radius: 10px;
+    min-width: 50%;
+}
