@@ -11,13 +11,14 @@
     <p role="contentinfo">Data entered: '@inputString'</p>
     @if (showResult)
     {
-        <p role="contentinfo">Data '@inputString' transformed is '@outputString'</p>
+        <Message DisplayMessage="@displayMessage" />
     }
 </div>
 
 @code {
     private string inputString = "";
     private string outputString = "";
+    private string displayMessage = "";
     private bool showResult = false;
 
     private void Refresh()
@@ -27,12 +28,14 @@
 
     private void ReverseThisString()
     {
-        showResult = true;
         outputString = string.Empty;
 
         for(var i = inputString.Length - 1; i >= 0; i--)
         {
             outputString += inputString[i];
         }
+
+        displayMessage = $"Data '{inputString}' transformed is '{outputString}'";
+        showResult = true;
     }
 }
