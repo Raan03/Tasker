@@ -1,6 +1,24 @@
-﻿<div>@DisplayMessage</div>
+﻿<div class="alert @CssClass border-1 border-dark">
+    <h4>@Title</h4>
+    <div>@DisplayMessage</div>
+</div>
 
 @code {
+    /// <summary>
+    /// Message to display
+    /// </summary>
     [Parameter, EditorRequired]
-    public string DisplayMessage { get; set; } = String.Empty;
+    public string DisplayMessage { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Title to display
+    /// </summary>
+    [Parameter]
+    public string Title { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Css class to apply, defaults to alert-success
+    /// </summary>
+    [Parameter]
+    public string CssClass { get; set; } = "alert-success";
 }

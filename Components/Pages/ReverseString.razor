@@ -9,11 +9,12 @@
         <button class="btn btn-primary" @onclick="ReverseThisString">Reverse the string</button>
     </div>
     <p role="contentinfo">Data entered: '@inputString'</p>
-    @if (showResult)
-    {
-        <Message DisplayMessage="@displayMessage" />
-    }
 </div>
+
+@if (showResult)
+{
+    <Message DisplayMessage="@displayMessage" Title="Result" CssClass="alert-danger" />
+}
 
 @code {
     private string inputString = "";
