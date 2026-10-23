@@ -1,0 +1,4 @@
+/* CSS for TaskItemComponent component */
+.completed{
+    text-decoration: line-through;
+}

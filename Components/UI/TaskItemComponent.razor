@@ -2,7 +2,7 @@
     <div>
         <InputCheckbox @bind-Value="Item.IsCompleted"/>
     </div>
-    <div class="px-2 flex-grow-1">@Item.Title</div>
+    <div class="px-2 flex-grow-1 @(Item.IsCompleted ? "complete" : "")">@Item.Title</div>
     <div><a @onclick="deleteItem"><i class="bi bi-trash-fill text-danger" /></a></div>
 </div>
 @code {
