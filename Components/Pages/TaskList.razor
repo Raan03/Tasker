@@ -14,7 +14,7 @@
                 <DataAnnotationsValidator/>
 
                 <div class="d-flex flex-row gap-2">
-                    <InputText class="form-control" placeholder="Enter task" @bind-Value="ti.Title" />
+                    <InputText class="form-control" placeholder="Enter task" @bind-Value="ti.Title" @ref="title" />
                     <button class="btn btn-primary" type="submit">Add</button>
                 </div>
                 <div>
@@ -27,7 +27,7 @@
             
                 @foreach (var item in list)
                 {
-                    <TaskItemComponent Item="item" OnDeleteCallback="deleteItem"></TaskItemComponent>
+                    <TaskItemComponent Item="item" OnDeleteCallback="deleteItem" OnCompleteCallback="updateTaskItem"></TaskItemComponent>
                 }            
         </div>
     </div>
@@ -37,12 +37,23 @@
 @code {
     private TaskItem ti = new TaskItem();
     private List<TaskItem> list = new List<TaskItem>();
+    private InputText? title { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        await loadListAsync();
-
         await base.OnInitializedAsync();
+
+        await loadListAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+
+        if (firstRender)
+        {
+            await title!.Element!.Value.FocusAsync();
+        }
     }
 
     private async Task addItem()
@@ -50,11 +61,14 @@
         list.Add(ti);
         ti = new TaskItem();
         await saveListAsync();
+        await title!.Element!.Value.FocusAsync();
     }
 
     private async Task deleteItem(TaskItem item)
     {
         await Task.Run(() => list.Remove(item));
+        await saveListAsync();
+
     }
 
     private async Task saveListAsync()
@@ -76,7 +90,8 @@
         }
     }
 
-    private async Task updateTask(TaskItem item)
+    private async Task updateTaskItem(TaskItem item)
     {
+        await saveListAsync();
     }
 }
