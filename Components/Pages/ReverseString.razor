@@ -14,6 +14,14 @@
 @if (showResult)
 {
     <Message DisplayMessage="@displayMessage" Title="Result" CssClass="alert-danger" />
+    @if (isPalindrome)
+    {
+        <Message DisplayMessage="The message is a palindrome!" CssClass="alert-success"></Message>
+    }
+    else
+    {
+        <Message DisplayMessage="The message is not palindrome!" CssClass="alert-primary"></Message>
+    }
 }
 
 @code {
@@ -21,6 +29,7 @@
     private string outputString = "";
     private string displayMessage = "";
     private bool showResult = false;
+    private bool isPalindrome = false;
 
     private void Refresh()
     {
@@ -35,6 +44,8 @@
         {
             outputString += inputString[i];
         }
+
+        isPalindrome = inputString == outputString;
 
         displayMessage = $"Data '{inputString}' transformed is '{outputString}'";
         showResult = true;
