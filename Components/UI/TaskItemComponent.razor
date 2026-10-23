@@ -1,8 +1,8 @@
 ﻿<div class="d-flex flex-row" id="taskitem-@Item.Id">
     <div>
-        <InputCheckbox @bind-Value="Item.IsCompleted"/>
+        <InputCheckbox @bind-Value="Item.IsCompleted" @bind-Value:after="updateItem"/>
     </div>
-    <div class="px-2 flex-grow-1 @(Item.IsCompleted ? "complete" : "")">@Item.Title</div>
+    <div class="px-2 flex-grow-1 @(Item.IsCompleted ? "completed" : "")">@Item.Title</div>
     <div><a @onclick="deleteItem"><i class="bi bi-trash-fill text-danger" /></a></div>
 </div>
 @code {
@@ -15,8 +15,16 @@
     [Parameter]
     public EventCallback<TaskItem> OnDeleteCallback { get; set; }
 
+    [Parameter]
+    public EventCallback<TaskItem> OnCompleteCallback { get; set; }
+
     private async Task deleteItem()
     {
         await OnDeleteCallback.InvokeAsync(Item);
+    }
+
+    private async Task updateItem()
+    {
+        await OnCompleteCallback.InvokeAsync(Item);
     }
 }
