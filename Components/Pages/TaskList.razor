@@ -1,4 +1,7 @@
 ﻿@page "/tasklist"
+@using System.Text.Json
+@inject IJSRuntime JS
+
 <PageTitle>Tasklist</PageTitle>
 
 <div class="d-flex align-items-center justify-content-center">
@@ -35,10 +38,18 @@
     private TaskItem ti = new TaskItem();
     private List<TaskItem> list = new List<TaskItem>();
 
-    private void addItem()
+    protected override async Task OnInitializedAsync()
+    {
+        await loadListAsync();
+
+        await base.OnInitializedAsync();
+    }
+
+    private async Task addItem()
     {
         list.Add(ti);
         ti = new TaskItem();
+        await saveListAsync();
     }
 
     private async Task deleteItem(TaskItem item)
@@ -46,8 +57,26 @@
         await Task.Run(() => list.Remove(item));
     }
 
+    private async Task saveListAsync()
+    {
+        string listJson = JsonSerializer.Serialize(list);
+        await JS.InvokeVoidAsync("localStorage.setItem", $"taskList", listJson);
+    }
+
+    private async Task loadListAsync()
+    {
+        try
+        {
+            string? storageJson = await JS.InvokeAsync<string>("localStorage.getItem", $"taskList") ?? "[]";
+            list = JsonSerializer.Deserialize<List<TaskItem>>(storageJson)!;
+        }catch(Exception ex)
+        {
+            list = new List<TaskItem>();
+            await saveListAsync();
+        }
+    }
+
     private async Task updateTask(TaskItem item)
     {
-        // wire up for later, save to storage (...)
     }
 }
