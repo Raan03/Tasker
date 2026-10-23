@@ -4,14 +4,14 @@
 <h3>Reverse this string</h3>
 
 <div class="vstack gap-3 col-8 col-md-6">
-    <InputText class="form-control" placeholder="Enter a string to reverse..." @bind-Value="inputString"/>
+    <InputText class="form-control" placeholder="Enter a string to reverse..." @bind-Value="inputString" @oninput="Refresh" />
     <div class="text-end">
         <button class="btn btn-primary" @onclick="ReverseThisString">Reverse the string</button>
     </div>
-    <p role="contentinfo">Data entered: @inputString</p>
+    <p role="contentinfo">Data entered: '@inputString'</p>
     @if (showResult)
     {
-        <p role="contentinfo">Data transformed: @outputString</p>
+        <p role="contentinfo">Data '@inputString' transformed is '@outputString'</p>
     }
 </div>
 
@@ -20,9 +20,19 @@
     private string outputString = "";
     private bool showResult = false;
 
+    private void Refresh()
+    {
+        showResult = false;
+    }
+
     private void ReverseThisString()
     {
         showResult = true;
-        outputString = string.Concat(inputString.ToCharArray().Reverse());
+        outputString = string.Empty;
+
+        for(var i = inputString.Length - 1; i >= 0; i--)
+        {
+            outputString += inputString[i];
+        }
     }
 }
